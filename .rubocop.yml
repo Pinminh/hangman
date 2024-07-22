@@ -14,5 +14,11 @@ AllCops:
 Style/FrozenStringLiteralComment:
   EnforcedStyle: never
 
+Style/RedundantSelf:
+  Enabled: false
+
+Style/ClassVars:
+  Enabled: false
+
 Metrics/MethodLength:
   Max: 20
