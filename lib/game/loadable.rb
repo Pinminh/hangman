@@ -5,9 +5,12 @@ module Loadable
   SAVES_EXTENSION = 'bin'.freeze
   DEFAULT_SAVENAME = 'default'.freeze
 
+  META_FILENAME = '_meta'.freeze
+
   @@serializer = Marshal
 
   @@dictionary = []
+  @@saves_history = []
 
   def load_dictionary(path = 'resource/google-10000-english-no-swears.txt')
     @@dictionary = File.readlines(path, chomp: true)
@@ -27,7 +30,10 @@ module Loadable
   def save_game(game, save_name = DEFAULT_SAVENAME)
     raise 'passed object is not game operator' unless game.is_a? self
 
+    push_file_history(save_name)
+
     serialized_game = serialize game
+    File.binwrite hist_path, serialized_hist
     File.binwrite saves_path(save_name), serialized_game
   end
 
@@ -39,31 +45,52 @@ module Loadable
     deserialize serialized_game
   end
 
-  def saves_path(save = DEFAULT_SAVENAME)
-    FileUtils.mkdir SAVES_FOLDERNAME unless Dir.exist? SAVES_FOLDERNAME
-    "#{SAVES_FOLDERNAME}/#{save}.#{SAVES_EXTENSION}"
+  def saves_path(save_name = DEFAULT_SAVENAME)
+    FileUtils.mkdir_p SAVES_FOLDERNAME
+    "#{SAVES_FOLDERNAME}/#{save_name}.#{SAVES_EXTENSION}"
+  end
+
+  def hist_path
+    "#{SAVES_FOLDERNAME}/#{META_FILENAME}"
+  end
+
+  def pull_file_history
+    return [] if File.size?(hist_path).nil?
+
+    serialized_history = File.binread hist_path
+
+    @@saves_history = deserialize serialized_history
   end
 
   private
 
-  def serialize(game)
+  def serialize(target)
     hashed_object = {}
 
-    game.instance_variables.each do |var_name|
-      hashed_object[var_name] = game.instance_variable_get var_name
+    target.instance_variables.each do |var_name|
+      hashed_object[var_name] = target.instance_variable_get var_name
     end
 
     @@serializer.dump hashed_object
   end
 
-  def deserialize(game_string)
-    hashed_object = @@serializer.load game_string
+  def deserialize(target_string)
+    hashed_object = @@serializer.load target_string
 
-    game = self.new
-    game.instance_variables.each do |var_name|
-      game.instance_variable_set var_name, hashed_object[var_name]
+    object = self.new
+    object.instance_variables.each do |var_name|
+      object.instance_variable_set var_name, hashed_object[var_name]
     end
 
-    game
+    object
+  end
+
+  def push_file_history(save_name)
+    @@saves_history.delete_if { |save| save[:name] == save_name }
+    @@saves_history << { name: save_name, time: Time.now }
+
+    serialized_history = serialize @@saves_history
+    history_path = "#{SAVES_FOLDERNAME}/#{META_FILENAME}"
+    File.binwrite history_path, serialized_history
   end
 end
