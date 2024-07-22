@@ -1,5 +1,7 @@
+require_relative 'loadable'
+
 class GameOperator
-  include Loadable
+  extend Loadable
 
   MAX_LIVES = 8
 
@@ -22,13 +24,15 @@ class GameOperator
   end
 
   def restart
-    @hidden_word = load_random_word
+    @hidden_word = self.class.load_random_word
 
     @current_char = nil
     @current_guess = '_' * @hidden_word.length
     @history = []
 
     @lives = MAX_LIVES
+
+    nil
   end
 
   def out_of_lives?
