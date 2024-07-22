@@ -28,23 +28,23 @@ module Loadable
     raise 'passed object is not game operator' unless game.is_a? self
 
     serialized_game = serialize game
-    File.binwrite relative_path(save_name), serialized_game
+    File.binwrite saves_path(save_name), serialized_game
   end
 
   def load_game(save_name = DEFAULT_SAVENAME)
-    save_path = relative_path save_name
+    save_path = saves_path save_name
     raise "save file '#{save_name}' does not exist" unless File.exist? save_path
 
     serialized_game = File.binread save_path
     deserialize serialized_game
   end
 
-  private
-
-  def relative_path(save = DEFAULT_SAVENAME)
+  def saves_path(save = DEFAULT_SAVENAME)
     FileUtils.mkdir SAVES_FOLDERNAME unless Dir.exist? SAVES_FOLDERNAME
     "#{SAVES_FOLDERNAME}/#{save}.#{SAVES_EXTENSION}"
   end
+
+  private
 
   def serialize(game)
     hashed_object = {}

@@ -9,6 +9,18 @@ class GameOperator
     restart
   end
 
+  def restart
+    @hidden_word = self.class.load_random_word
+
+    @current_char = nil
+    @current_guess = '_' * @hidden_word.length
+    @history = []
+
+    @lives = MAX_LIVES
+
+    nil
+  end
+
   def guess(char)
     char.downcase!
 
@@ -21,18 +33,6 @@ class GameOperator
     update_state(char)
 
     true
-  end
-
-  def restart
-    @hidden_word = self.class.load_random_word
-
-    @current_char = nil
-    @current_guess = '_' * @hidden_word.length
-    @history = []
-
-    @lives = MAX_LIVES
-
-    nil
   end
 
   def out_of_lives?
