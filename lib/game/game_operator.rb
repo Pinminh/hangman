@@ -1,14 +1,10 @@
 class GameOperator
+  include Loadable
+
   MAX_LIVES = 8
 
-  def initialize(hidden_word)
-    @hidden_word = hidden_word
-
-    @current_char = nil
-    @current_guess = '_' * hidden_word.length
-    @history = []
-
-    @lives = MAX_LIVES
+  def initialize
+    restart
   end
 
   def guess(char)
@@ -25,11 +21,11 @@ class GameOperator
     true
   end
 
-  def restart(new_word)
-    @hidden_word = new_word
+  def restart
+    @hidden_word = load_random_word
 
     @current_char = nil
-    @current_guess = '_' * new_word.length
+    @current_guess = '_' * @hidden_word.length
     @history = []
 
     @lives = MAX_LIVES
