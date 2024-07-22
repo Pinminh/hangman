@@ -3,20 +3,22 @@ require_relative 'loadable'
 class GameOperator
   extend Loadable
 
-  MAX_LIVES = 8
+  attr_reader :hidden_word, :current_char, :max_lives, :lives
 
-  def initialize
+  def initialize(max_lives = 7)
+    @max_lives = max_lives
+
     restart
   end
 
   def restart
-    @hidden_word = self.class.load_random_word
+    @hidden_word = self.class.load_random_word.freeze
 
     @current_char = nil
     @current_guess = '_' * @hidden_word.length
     @history = []
 
-    @lives = MAX_LIVES
+    @lives = @max_lives
 
     nil
   end
@@ -43,6 +45,14 @@ class GameOperator
     @current_guess == @hidden_word
   end
 
+  def at_start_state?
+    return true if @current_char.nil?
+    return true if @history.empty?
+    return true if @current_guess.match?(/\A_+\Z/)
+
+    false
+  end
+
   def history
     @history.clone
   end
@@ -51,10 +61,22 @@ class GameOperator
     @history.map { |pair| pair[:guess] }
   end
 
+  def current_guess
+    @current_guess.clone
+  end
+
+  def max_lives=(max_lives)
+    raise "lives #{max_lives} is not an integer" unless max_lives.is_a? Integer
+    raise "lives #{max_lives} is not positive" unless max_lives.positive?
+    raise 'the game is not in start state' unless at_start_state?
+
+    @max_lives = max_lives
+  end
+
   private
 
   def update_state(char)
-    @current_char = char
+    @current_char = char.freeze
 
     match_indices = (0...@hidden_word.length).find_all do |index|
       @hidden_word[index] == char
