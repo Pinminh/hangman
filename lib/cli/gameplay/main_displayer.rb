@@ -12,6 +12,8 @@ class MainDisplayer
   end
 
   def display
+    cli.clear_terminal
+
     action_title = Rainbow('Guessing...').bold.bright.crimson
 
     CLI::UI::Frame.open(action_title, color: :red)

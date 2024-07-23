@@ -17,6 +17,8 @@ class StartMenu
   end
 
   def display
+    cli.clear_terminal
+
     game_title = Rainbow('Hangman (EN)').bold.bright.crimson
     info = Rainbow("#{@version} - #{@author}").italic.silver.underline.rjust(53)
     menu_name = Rainbow('Main Menu:').bold.bright.gold
@@ -35,14 +37,6 @@ class StartMenu
     CLI::UI::Frame.close nil
     CLI::UI::Frame.close nil
 
-    handle_options choice
-  end
-
-  private
-
-  def handle_options(choice)
-    case choice
-    when :new_game then cli.main_instructor.play_game mode: :new
-    end
+    cli.menu_handler.handle_signal choice
   end
 end

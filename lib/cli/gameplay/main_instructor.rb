@@ -3,12 +3,14 @@ class MainInstructor
 
   def initialize(cli)
     @cli = cli
-    @control_keys = ["\e[A", "\e[B", "\e[C", "\e[D", "\r",
-                     'w', 's', 'd', 'a', ' '].freeze
+    @control_keys = ["\e[A", "\e[B", "\e[C", "\e[D",
+                     'w', 's', 'd', 'a'].freeze
   end
 
-  def play_game(options)
-    cli.main_displayer.reset_cursor if options[:mode] == :new
+  def play_game(reset: false)
+    cli.hangman.game.restart if reset == true
+
+    cli.main_displayer.reset_cursor
     cli.main_displayer.display
 
     loop do
@@ -25,7 +27,7 @@ class MainInstructor
 
   def handle_key_value(key_value)
     if key_value == 'PAUSE'
-      # cli.pause_menu.display
+      cli.pause_menu.display
       return true
     end
 
@@ -52,11 +54,10 @@ class MainInstructor
   end
 
   def ask_navigation
-    key = ''
-    $stdin.raw do
-      key = $stdin.getch
-      key += $stdin.getch + $stdin.getch if key == "\e"
-    end
+    key = $stdin.getch
+    key << $stdin.getch << $stdin.getch if key == "\e"
+
+    $stdin.getch while $stdin.ready?
     key
   end
 

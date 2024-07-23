@@ -2,18 +2,23 @@ class PauseMenu
   attr_reader :cli
 
   def initialize(cli)
-    @cli
+    @cli = cli
   end
 
-  def unpause
-  end
+  def display
+    pause_title = Rainbow('Pause Menu').bold.bright.crimson
+    CLI::UI::Frame.open(pause_title, color: :red)
 
-  def restart
-  end
+    prompt = Rainbow('You have paused the game').bold.bright.gold
+    choice = CLI::UI::Prompt.ask(prompt, filter_ui: false) do |handler|
+      handler.option('Unpause') { :unpause }
+      handler.option('Save Game') { :save_game }
+      handler.option('Restart') { :new_game }
+      handler.option('Start Menu') { :start_menu }
+    end
 
-  def save_game
-  end
+    CLI::UI::Frame.close nil
 
-  def start_menu
+    cli.menu_handler.handle_signal choice
   end
 end
