@@ -42,7 +42,7 @@ class StartMenu
 
   def handle_options(choice)
     case choice
-    when :new_game then cli.main_instructor.play_game
+    when :new_game then cli.main_instructor.play_game mode: :new
     end
   end
 end

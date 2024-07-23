@@ -68,7 +68,7 @@ class MainDisplayer
     guess.gsub!(/[a-z]/) { |letter| Rainbow(letter).bold.bright.gold }
     guess.gsub!('_', Rainbow('_').bold.bright.white)
 
-    return game.current_guess if game.correct_guess? || game.out_of_lives?
+    return game.hidden_word if game.correct_guess? || game.out_of_lives?
 
     guess
   end

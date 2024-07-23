@@ -3,7 +3,7 @@ require_relative 'loadable'
 class GameOperator
   extend Loadable
 
-  attr_reader :hidden_word, :current_char, :max_lives, :live,
+  attr_reader :hidden_word, :current_char, :max_lives, :lives,
               :num_wins, :num_plays
 
   def initialize(max_lives = 7)

@@ -1,5 +1,8 @@
 class PauseMenu
-  def initialize
+  attr_reader :cli
+
+  def initialize(cli)
+    @cli
   end
 
   def unpause
