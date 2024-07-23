@@ -3,10 +3,14 @@ require_relative 'loadable'
 class GameOperator
   extend Loadable
 
-  attr_reader :hidden_word, :current_char, :max_lives, :lives
+  attr_reader :hidden_word, :current_char, :max_lives, :live,
+              :num_wins, :num_plays
 
   def initialize(max_lives = 7)
     @max_lives = max_lives
+
+    @num_wins = 0
+    @num_plays = 0
 
     restart
   end
@@ -30,9 +34,10 @@ class GameOperator
 
     return false unless @lives.positive?
     return false if correct_guess?
-    return false if chars_history.include?(char)
+    return false if chars_history.include? char
 
-    update_state(char)
+    update_state char
+    update_score
 
     true
   end
@@ -90,5 +95,10 @@ class GameOperator
     @lives -= 1 unless char_correct
 
     char_correct
+  end
+
+  def update_score
+    @num_plays += 1
+    @num_wins += 1 if correct_guess?
   end
 end
