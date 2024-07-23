@@ -5,7 +5,7 @@ class Hangman
   VERSION = '0.1.0'.freeze
   AUTHOR = 'Pmin'.freeze
 
-  attr_reader :version, :author, :game
+  attr_reader :version, :author, :game, :cli
 
   def initialize
     @version = VERSION
@@ -16,6 +16,6 @@ class Hangman
   end
 
   def run
-    @cli.displayer.display_start_menu
+    cli.start_menu.display
   end
 end

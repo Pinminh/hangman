@@ -1,41 +1,8 @@
 require 'cli/ui'
 require 'rainbow/refinement'
 
-class CliDisplayer
-  attr_reader :instructor
-
-  def initialize(cli)
-    @cli = cli
-
-    @author = cli.hangman.author
-    @version = cli.hangman.version
-
-    @keyboard = [('A'..'I').to_a, ('J'..'R').to_a, ('S'..'Z').to_a, ['PAUSE']]
-    @cursor = { row: 0, col: 0 }
-
-    CLI::UI::StdoutRouter.enable
-  end
-
-  def display_start_menu
-    game_title = Rainbow('Hangman (EN)').bold.bright.crimson
-    info = Rainbow("#{@version} - #{@author}").italic.silver.underline.rjust(53)
-    menu_name = Rainbow('Main Menu:').bold.bright.gold
-
-    CLI::UI::Frame.open(game_title, color: :red)
-    CLI::UI::Frame.open(info, frame_style: :bracket, color: :yellow)
-
-    choice = CLI::UI::Prompt.ask(menu_name, filter_ui: false) do |handler|
-      handler.option('New Game') { :new_game }
-      handler.option('Continue') { :continue }
-      handler.option('Load Game') { :load_game }
-      handler.option('Settings') { :settings }
-      handler.option('Quit') { :quit }
-    end
-
-    CLI::UI::Frame.close nil
-    CLI::UI::Frame.close nil
-
-    @cli.instructor.handle_start_menu choice
+class PlayMenu
+  def initialize
   end
 
   def display_gameplay
@@ -69,8 +36,11 @@ class CliDisplayer
     move_cursor_to 0, 0
   end
 
-  def cursor_on_pause?
-    @cursor[:row] == 3 && @cursor[:col].zero?
+  def value_on_cursor
+    row_index = @cursor[:row]
+    col_index = @cursor[:col]
+
+    @keyboard[row_index][col_index].clone
   end
 
   private
