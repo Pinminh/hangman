@@ -54,11 +54,8 @@ class MainInstructor
   end
 
   def ask_navigation
-    key = $stdin.getch
-    key << $stdin.getch << $stdin.getch if key == "\e"
-
     $stdin.getch while $stdin.ready?
-    key
+    $stdin.raw { |io| io.readpartial 3 }
   end
 
   def move_cursor_by_key(navi_key)

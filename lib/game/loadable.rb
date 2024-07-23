@@ -33,7 +33,6 @@ module Loadable
     push_file_history(save_name)
 
     serialized_game = serialize game
-    File.binwrite hist_path, serialized_hist
     File.binwrite saves_path(save_name), serialized_game
   end
 
@@ -45,15 +44,6 @@ module Loadable
     deserialize serialized_game
   end
 
-  def saves_path(save_name = DEFAULT_SAVENAME)
-    FileUtils.mkdir_p SAVES_FOLDERNAME
-    "#{SAVES_FOLDERNAME}/#{save_name}.#{SAVES_EXTENSION}"
-  end
-
-  def hist_path
-    "#{SAVES_FOLDERNAME}/#{META_FILENAME}"
-  end
-
   def pull_file_history
     return [] if File.size?(hist_path).nil?
 
@@ -63,6 +53,16 @@ module Loadable
   end
 
   private
+
+  def saves_path(save_name = DEFAULT_SAVENAME)
+    FileUtils.mkdir_p SAVES_FOLDERNAME
+    "#{SAVES_FOLDERNAME}/#{save_name}.#{SAVES_EXTENSION}"
+  end
+
+  def hist_path
+    FileUtils.mkdir_p SAVES_FOLDERNAME
+    "#{SAVES_FOLDERNAME}/#{META_FILENAME}"
+  end
 
   def serialize(target)
     hashed_object = {}
@@ -90,7 +90,6 @@ module Loadable
     @@saves_history << { name: save_name, time: Time.now }
 
     serialized_history = serialize @@saves_history
-    history_path = "#{SAVES_FOLDERNAME}/#{META_FILENAME}"
-    File.binwrite history_path, serialized_history
+    File.binwrite hist_path, serialized_history
   end
 end
