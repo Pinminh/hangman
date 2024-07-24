@@ -1,3 +1,6 @@
+require 'cli/ui'
+require 'rainbow/refinement'
+
 class PauseMenu
   attr_reader :cli
 

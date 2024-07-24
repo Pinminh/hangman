@@ -98,7 +98,7 @@ class GameOperator
   end
 
   def update_score
-    @num_plays += 1
+    @num_plays += 1 if correct_guess? || out_of_lives?
     @num_wins += 1 if correct_guess?
   end
 end
