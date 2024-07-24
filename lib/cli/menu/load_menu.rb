@@ -1,6 +1,7 @@
 require 'cli/ui'
 require 'rainbow/refinement'
 
+# Display load menu, saved games list and do the loading
 class LoadMenu
   attr_reader :cli
 

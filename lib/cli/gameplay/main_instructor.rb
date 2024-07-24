@@ -1,3 +1,4 @@
+# Control interactions: within in-game keyboard, between keyboard and displayer
 class MainInstructor
   attr_reader :cli, :control_keys
 

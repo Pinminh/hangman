@@ -1,6 +1,7 @@
 require 'cli/ui'
 require 'rainbow/refinement'
 
+# Display the in-game content (when guessing word)
 class MainDisplayer
   attr_reader :cli
 

@@ -1,6 +1,7 @@
 require 'cli/ui'
 require 'rainbow/refinement'
 
+# Display main menu of the game
 class StartMenu
   attr_reader :instructor, :cli
 

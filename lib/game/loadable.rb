@@ -1,3 +1,4 @@
+# Implement serialization, loading, saving at class level methods
 # Loadable is expected to include only class methods and class variables
 # self variable refer to the class, not object
 module Loadable

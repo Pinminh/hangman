@@ -1,6 +1,7 @@
 require 'cli/ui'
 require 'rainbow/refinement'
 
+# Display pause menu during guessing word
 class PauseMenu
   attr_reader :cli
 
@@ -23,17 +24,5 @@ class PauseMenu
     CLI::UI::Frame.close nil
 
     cli.menu_handler.handle_signal choice
-  end
-
-  def display_saving
-    save_name = ask_save_name
-    game = cli.hangman.game
-    game.class.save_game game, save_name
-
-    cli.main_displayer.display
-    display_save_window
-
-    cli.main_displayer.display
-    display
   end
 end

@@ -1,3 +1,4 @@
+# Display menu after win or lose the guess
 class EndMenu
   attr_reader :cli
 

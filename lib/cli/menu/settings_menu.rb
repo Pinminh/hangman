@@ -1,6 +1,7 @@
 require 'cli/ui'
 require 'rainbow/refinement'
 
+# Display settings menu (currently having no contents other than navigations)
 class SettingsMenu
   attr_reader :cli
 

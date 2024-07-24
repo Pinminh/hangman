@@ -11,6 +11,7 @@ require_relative 'menu/quit_panel'
 
 require_relative 'menu_signal_handler'
 
+# Wrapper for everything related to CLI
 class GameCLI
   attr_reader :hangman, :main_displayer, :main_instructor,
               :start_menu, :pause_menu, :load_menu, :end_menu, :settings_menu,

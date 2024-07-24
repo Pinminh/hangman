@@ -1,6 +1,7 @@
 require 'cli/ui'
 require 'rainbow/refinement'
 
+# Display final message before quitting game
 class QuitPanel
   attr_reader :cli
 

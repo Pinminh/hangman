@@ -1,5 +1,6 @@
 require_relative 'loadable'
 
+# Internal mechanics of how hangman works
 class GameOperator
   extend Loadable
 

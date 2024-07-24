@@ -1,3 +1,4 @@
+# Handle signals between menus for navigations, loadings, savings
 class MenuSignalHandler
   attr_reader :cli
 
