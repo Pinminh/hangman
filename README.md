@@ -9,7 +9,7 @@ This project is intended for practicing serialization and working with I/O. For 
 Though, on the way, I picked up many other functionalities and implemented them into this project, which makes it look more like a real game with menus, options, settings...
 
 ## Found problems
-### Stacking non-return methods on call stack
+### Stacking methods on call stack
 There is a detrimental pitfall that I didn't realize before.
-Every time any menu sends a signal to navigate, the corresponding methods will be called. But they are called in such a way that they're stacked onto each other.
-Theoretically, if the game is played long enough, we'll get stack overflow.
+Every time a menu sends signals, the corresponding methods will be called. But they are called in such a way that they're stacked on top of each other.
+Theoretically, if the game is played long enough, we'll get a stack overflow.
