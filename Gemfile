@@ -8,4 +8,6 @@ gem 'pry-byebug', '~> 3.10', require: false
 
 gem 'cli-ui', '~> 2.2'
 
-gem "rainbow", "~> 3.1"
+gem 'rainbow', '~> 3.1'
+
+gem 'rake', '~> 13.2'
