@@ -6,15 +6,15 @@ require_relative 'menu/load_menu'
 require_relative 'menu/pause_menu'
 require_relative 'menu/end_menu'
 
+require_relative 'menu/settings_menu'
 require_relative 'menu/quit_panel'
 
 require_relative 'menu_signal_handler'
 
 class GameCLI
   attr_reader :hangman, :main_displayer, :main_instructor,
-              :start_menu, :pause_menu, :load_menu, :end_menu,
-              :quit_panel,
-              :menu_handler
+              :start_menu, :pause_menu, :load_menu, :end_menu, :settings_menu,
+              :quit_panel, :menu_handler
 
   def initialize(hangman)
     @hangman = hangman
@@ -27,6 +27,7 @@ class GameCLI
     @pause_menu = PauseMenu.new self
     @end_menu = EndMenu.new self
 
+    @settings_menu = SettingsMenu.new self
     @quit_panel = QuitPanel.new self
 
     @menu_handler = MenuSignalHandler.new self

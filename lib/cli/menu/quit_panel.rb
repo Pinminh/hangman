@@ -1,3 +1,6 @@
+require 'cli/ui'
+require 'rainbow/refinement'
+
 class QuitPanel
   attr_reader :cli
 
