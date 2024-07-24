@@ -1,3 +1,5 @@
+# Loadable is expected to include only class methods and class variables
+# self variable refer to the class, not object
 module Loadable
   PSEUDO_RNG = Random.new.freeze
 
@@ -28,11 +30,11 @@ module Loadable
   end
 
   def save_game(game, save_name = DEFAULT_SAVENAME)
-    raise 'passed object is not game operator' unless game.is_a? self
+    raise 'passed object is not of loadable class' unless game.is_a? self
 
-    push_file_history(save_name)
+    push_file_history save_name
 
-    serialized_game = serialize game
+    serialized_game = serialize_game game
     File.binwrite saves_path(save_name), serialized_game
   end
 
@@ -41,7 +43,7 @@ module Loadable
     raise "save file '#{save_name}' does not exist" unless File.exist? save_path
 
     serialized_game = File.binread save_path
-    deserialize serialized_game
+    deserialize_game serialized_game
   end
 
   def pull_file_history
@@ -64,7 +66,7 @@ module Loadable
     "#{SAVES_FOLDERNAME}/#{META_FILENAME}"
   end
 
-  def serialize(target)
+  def serialize_game(target)
     hashed_object = {}
 
     target.instance_variables.each do |var_name|
@@ -74,7 +76,7 @@ module Loadable
     @@serializer.dump hashed_object
   end
 
-  def deserialize(target_string)
+  def deserialize_game(target_string)
     hashed_object = @@serializer.load target_string
 
     object = self.new
@@ -83,6 +85,14 @@ module Loadable
     end
 
     object
+  end
+
+  def serialize(target)
+    @@serializer.dump target
+  end
+
+  def deserialize(serialized_target)
+    @@serializer.load serialized_target
   end
 
   def push_file_history(save_name)
