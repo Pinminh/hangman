@@ -15,6 +15,7 @@ class MenuSignalHandler
     when :save_game_on_pause then do_save_game_on_pause
     when :save_game_on_end then do_save_game_on_end
     when :start_menu then cli.start_menu.display
+    when :quit then cli.quit_panel.display
     end
   end
 
