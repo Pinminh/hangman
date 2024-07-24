@@ -18,6 +18,8 @@ class MenuSignalHandler
     when :settings then cli.settings_menu.display
     when :quit then cli.quit_panel.display
     end
+
+    cli.quit_panel.display
   end
 
   private
@@ -93,14 +95,30 @@ class MenuSignalHandler
       prompt = Rainbow('Enter save name:').bright.gold
       name = CLI::UI::Prompt.ask(prompt).strip
 
-      if name.length > 16
-        error = Rainbow('Name cannot exceed 16 characters').bright.red
-        CLI::UI::Printer.puts error
-        sleep 2
-      end
-
-      break if name.length <= 16
+      must_break = handle_name_error name
+      break if must_break
     end
     name
+  end
+
+  def handle_name_error(name)
+    if name.length > 16
+      error = Rainbow('Name cannot exceed 16 characters').bright.red
+      CLI::UI::Printer.puts error
+      sleep 2.0
+      return false
+    end
+
+    names = cli.hangman.game.class.pull_file_history.map { |hist| hist[:name] }
+    if names.include? name
+      name_prompt = Rainbow("Name '#{name}' already exists").bright.red
+      is_overwrite = CLI::UI::Prompt.ask(name_prompt, filter_ui: false) do |handler|
+        handler.option('Overwrite existing game') { true }
+        handler.option('Choose another name') { false }
+      end
+      return is_overwrite
+    end
+
+    true
   end
 end
