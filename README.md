@@ -8,7 +8,7 @@ Hangman is a popular game, it is all about guessing words. For details, you can 
 This project is intended for practicing serialization and working with I/O. For this purpose, I used Marshal serialization to attain high-speed dump and load.
 Though, on the way, I picked up many other functionalities and implemented them into this project, which makes it look more like a real game with menus, options, settings...
 
-## Credit to Dictionaries
+## Credit for dictionaries
 To build Hangman game, a list of words is needed. I used 3 different dictionaries (which can be chosen in-game):
 - [google-10000-english-no-swears.txt](https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-no-swears.txt) recommended by [The Odin Project](https://www.theodinproject.com/lessons/ruby-hangman).
 - [animals.txt](https://gist.githubusercontent.com/atduskgreg/3cf8ef48cb0d29cf151bedad81553a54/raw/82f142562cf50b0f6fb8010f890b2f934093553e/animals.txt) from [atduskgreg](https://gist.github.com/atduskgreg/3cf8ef48cb0d29cf151bedad81553a54).
