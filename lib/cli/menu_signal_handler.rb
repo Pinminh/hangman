@@ -18,6 +18,7 @@ class MenuSignalHandler
     when :start_menu then cli.start_menu.display
     when :settings then cli.settings_menu.display
     when :choose_difficulty then cli.settings_menu.display_difficulty
+    when :choose_dictionary then cli.settings_menu.display_dictionary
     when :quit then cli.quit_panel.display
     end
 
