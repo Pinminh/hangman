@@ -34,10 +34,10 @@ class MainInstructor
     game = cli.hangman.game
     game.guess key_value
 
-    game.correct_guess? || game.out_of_lives?
+    is_end = game.correct_guess? || game.out_of_lives?
 
-    # cli.end_menu.display if is_end
-    # is_end
+    cli.end_menu.display if is_end
+    is_end
   end
 
   def read_key

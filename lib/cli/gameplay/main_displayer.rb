@@ -51,8 +51,6 @@ class MainDisplayer
     @keyboard[row_index][col_index].clone
   end
 
-  private
-
   def lives_box_bar
     num_lives = cli.hangman.game.lives
 
@@ -62,6 +60,8 @@ class MainDisplayer
 
     Rainbow("\u25A0\u25A0  " * num_lives).bright.color(lives_color)
   end
+
+  private
 
   def current_guess
     game = cli.hangman.game

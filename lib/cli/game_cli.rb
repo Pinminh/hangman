@@ -4,12 +4,13 @@ require_relative 'gameplay/main_instructor'
 require_relative 'menu/start_menu'
 require_relative 'menu/load_menu'
 require_relative 'menu/pause_menu'
+require_relative 'menu/end_menu'
 
-require_relative 'menu/menu_signal_handler'
+require_relative 'menu_signal_handler'
 
 class GameCLI
   attr_reader :hangman, :main_displayer, :main_instructor,
-              :start_menu, :pause_menu, :load_menu,
+              :start_menu, :pause_menu, :load_menu, :end_menu,
               :menu_handler
 
   def initialize(hangman)
@@ -21,6 +22,7 @@ class GameCLI
     @start_menu = StartMenu.new self
     @load_menu = LoadMenu.new self
     @pause_menu = PauseMenu.new self
+    @end_menu = EndMenu.new self
 
     @menu_handler = MenuSignalHandler.new self
   end
